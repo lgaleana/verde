@@ -11,7 +11,7 @@
     />
 
     <Button
-        android:id="@+id/report_btn"
+        android:id="@+id/add_btn"
         android:layout_width="60dp"
         android:layout_height="60dp"
         android:layout_alignParentBottom="true"
