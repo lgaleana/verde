@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <item name="verde_green" type="color">#00c853</item>
+    <item name="verde_green_dark" type="color">#00ac47</item>
+</resources>
