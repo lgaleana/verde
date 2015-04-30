@@ -20,7 +20,8 @@
         </activity>
         <activity
             android:name=".SetupActivity"
-            android:label="@string/title_activity_setup" >
+            android:label="@string/title_activity_setup"
+            android:theme="@style/Setup">
         </activity>
     </application>
 
