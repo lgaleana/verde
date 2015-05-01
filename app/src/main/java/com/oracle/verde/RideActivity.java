@@ -11,7 +11,8 @@ import android.widget.Button;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-import com.oracle.com.oracle.data.Data;
+import com.oracle.data.Data;
+import com.oracle.web.JavascriptInterface;
 
 
 public class RideActivity extends ActionBarActivity {
@@ -25,9 +26,11 @@ public class RideActivity extends ActionBarActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_ride);
 
-        WebView webView = (WebView) findViewById(R.id.webview_ride);
+        final WebView webView = (WebView) findViewById(R.id.webview_ride);
         webView.getSettings().setJavaScriptEnabled(true);
-        webView.loadUrl("file:///android_asset/index.html");
+        webView.loadUrl("file:///android_asset/route.html");
+
+        webView.addJavascriptInterface(new JavascriptInterface(this), "Android");
 
         gasConsumption = (TextView) findViewById(R.id.gas_consumption);
         gasConsumption.setText("0 gallons saved");
@@ -78,6 +81,10 @@ public class RideActivity extends ActionBarActivity {
                         infoContainer.setVisibility(View.GONE);
                         stateButton.setVisibility(View.GONE);
                         gasConsumption.setVisibility(View.VISIBLE);
+
+                        webView.loadUrl("javascript:map.setCenter(origin)");
+                        webView.loadUrl("javascript:map.setZoom(15)");
+                        
                         break;
                 }
             }

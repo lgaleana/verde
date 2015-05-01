@@ -20,7 +20,7 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.TimePicker;
 
-import com.oracle.com.oracle.data.Data;
+import com.oracle.data.Data;
 
 import java.text.NumberFormat;
 import java.util.Calendar;

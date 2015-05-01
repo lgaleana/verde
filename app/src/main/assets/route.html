@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta name="viewport" content="initial-scale=1.0, user-scalable=no">
+<meta charset="utf-8">
+<title>Waypoints in directions</title>
+<style>
+html, body, #map-canvas {
+	height: 100%;
+	margin: 0px;
+	padding: 0px
+}
+</style>
+<script src="https://maps.googleapis.com/maps/api/js?v=3.exp&signed_in=true"></script>
+<script>
+var directionsDisplay;
+var directionsService = new google.maps.DirectionsService();
+var map;
+
+var origin = new google.maps.LatLng(37.569125, -122.32156500000002);
+var stop1 = new google.maps.LatLng(37.558307, -122.317544);
+var stop2 = new google.maps.LatLng(37.543066, -122.31584700000002);
+var stop3 = new google.maps.LatLng(37.536694, -122.30396999999999);
+var destination = new google.maps.LatLng(37.5311942, -122.2646403);
+
+function initialize() {
+	directionsDisplay = new google.maps.DirectionsRenderer();
+
+	var mapOptions = {
+		zoom: 16,
+		center: origin, 
+		disableDefaultUI: true
+	}
+	map = new google.maps.Map(document.getElementById('map-canvas'), mapOptions);
+	directionsDisplay.setMap(map);
+
+	calcRoute();
+}
+
+function calcRoute() {
+	var waypts = [];
+	waypts.push({location:stop1, stopover:true});
+	waypts.push({location:stop2, stopover:true});
+	waypts.push({location:stop3, stopover:true});
+
+	var request = {
+		origin: origin,
+		destination: destination,
+		waypoints: waypts,
+		optimizeWaypoints: true,
+		travelMode: google.maps.TravelMode.DRIVING
+	};
+
+	directionsService.route(request, function(response, status) {
+		if (status == google.maps.DirectionsStatus.OK) {
+			directionsDisplay.setDirections(response);
+		}
+	});
+}
+
+google.maps.event.addDomListener(window, 'load', initialize);
+
+</script>
+</head>
+<body>
+	<div id="map-canvas"></div>
+</body>
+</html>

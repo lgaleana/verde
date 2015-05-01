@@ -8,7 +8,8 @@ import android.view.View;
 import android.webkit.WebView;
 import android.widget.Button;
 
-import com.oracle.com.oracle.data.Data;
+import com.oracle.data.Data;
+import com.oracle.web.JavascriptInterface;
 
 public class MainActivity extends ActionBarActivity {
 

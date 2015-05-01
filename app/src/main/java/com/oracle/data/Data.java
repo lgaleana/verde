@@ -1,4 +1,4 @@
-package com.oracle.com.oracle.data;
+package com.oracle.data;
 
 import android.content.Context;
 import android.content.SharedPreferences;
