@@ -22,13 +22,16 @@
             android:name=".SetupActivity"
             android:label="@string/title_activity_setup"
             android:parentActivityName=".MainActivity"
-            android:theme="@style/Setup"
             android:windowSoftInputMode="adjustResize" >
 >
         </activity>
         <activity
             android:name=".LoginActivity"
             android:label="@string/title_activity_login" >
+        </activity>
+        <activity
+            android:name=".RideActivity"
+            android:label="@string/title_activity_ride" >
         </activity>
     </application>
 

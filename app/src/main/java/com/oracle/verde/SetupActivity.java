@@ -4,6 +4,7 @@ import android.app.DatePickerDialog;
 import android.app.Dialog;
 import android.app.DialogFragment;
 import android.app.TimePickerDialog;
+import android.content.Intent;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.text.format.DateFormat;
@@ -63,7 +64,7 @@ public class SetupActivity extends ActionBarActivity {
 
         Integer[] noPassengers = {1, 2, 3, 4};
         Spinner spinner = (Spinner) findViewById(R.id.passengers_selector);
-        ArrayAdapter<Integer> adapter = new ArrayAdapter<Integer>(this, android.R.layout.simple_spinner_item, noPassengers);
+        ArrayAdapter<Integer> adapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, noPassengers);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinner.setAdapter(adapter);
     }
@@ -79,6 +80,8 @@ public class SetupActivity extends ActionBarActivity {
         int id = item.getItemId();
 
         if (id == R.id.action_save) {
+            Intent intent = new Intent(SetupActivity.this, RideActivity.class);
+            startActivity(intent);
             return true;
         }
 
