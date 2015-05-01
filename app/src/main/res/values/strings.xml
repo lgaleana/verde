@@ -1,11 +1,12 @@
 <resources>
     <string name="app_name">Verde</string>
     <string name="title_activity_setup">Ride Setup</string>
-    <string name="title_activity_ride">RideActivity</string>
-    <string name="title_activity_login">LoginActivity</string>
+    <string name="title_activity_ride">Ride</string>
+    <string name="title_activity_login">Login</string>
 
     <string name="action_save">Save</string>
     <string name="action_cancel">Cancel</string>
+    <string name="action_finish">Finish</string>
 
     <string name="destination_hint">Destination</string>
     <string name="drive_txt">Drive</string>

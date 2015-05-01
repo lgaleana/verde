@@ -2,4 +2,6 @@
 <resources>
     <item name="verde_green" type="color">#00c853</item>
     <item name="verde_green_dark" type="color">#00ac47</item>
+    <item name="verde_blue" type="color">#00A8C8</item>
+    <item name="verde_red" type="color">#C80C00</item>
 </resources>
