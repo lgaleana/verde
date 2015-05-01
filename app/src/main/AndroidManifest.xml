@@ -21,7 +21,9 @@
         <activity
             android:name=".SetupActivity"
             android:label="@string/title_activity_setup"
-            android:theme="@style/Setup">
+            android:theme="@style/Setup"
+            android:windowSoftInputMode="adjustResize"
+            android:parentActivityName="com.oracle.verde.MainActivity" >>
         </activity>
     </application>
 

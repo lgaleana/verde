@@ -12,6 +12,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.DatePicker;
+import android.widget.RadioButton;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.TimePicker;
@@ -25,6 +26,7 @@ public class SetupActivity extends ActionBarActivity {
     static String[] days = {"Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"};
     static String[] months = {"Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"};
     static String standard = "AM";
+    static int ride = 0;
 
     static boolean departure = true;
 
@@ -50,6 +52,7 @@ public class SetupActivity extends ActionBarActivity {
         setContentView(R.layout.activity_setup);
 
         getSupportActionBar().setElevation(0);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         NumberFormat nf = NumberFormat.getInstance();
         nf.setMinimumIntegerDigits(2);
@@ -89,6 +92,28 @@ public class SetupActivity extends ActionBarActivity {
     public void showTimePickerDialog(View v) {
         DialogFragment newFragment = new TimePickerFragment();
         newFragment.show(getFragmentManager(), "timePicker");
+    }
+
+    public void onRadioButtonClicked(View view) {
+        boolean checked = ((RadioButton) view).isChecked();
+
+        switch(view.getId()) {
+            case R.id.drive_radio:
+                if (checked) {
+                    ride = -1;
+                    break;
+                }
+            case R.id.either_radio:
+                if (checked) {
+                    ride = 0;
+                    break;
+                }
+            case R.id.ride_radio:
+                if (checked) {
+                    ride = 1;
+                    break;
+                }
+        }
     }
 
     public static class DatePickerFragment extends DialogFragment implements DatePickerDialog.OnDateSetListener {
