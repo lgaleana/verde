@@ -1,5 +1,6 @@
 package com.oracle.verde;
 
+import android.content.Intent;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.view.Menu;
@@ -10,12 +11,14 @@ import android.widget.Button;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-import org.w3c.dom.Text;
+import com.oracle.com.oracle.data.Data;
 
 
 public class RideActivity extends ActionBarActivity {
 
-    static int state = 0;
+    TextView gasConsumption;
+    RelativeLayout infoContainer;
+    Button stateButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -26,10 +29,10 @@ public class RideActivity extends ActionBarActivity {
         webView.getSettings().setJavaScriptEnabled(true);
         webView.loadUrl("file:///android_asset/index.html");
 
-        final TextView gasConsumption = (TextView) findViewById(R.id.gas_consumption);
+        gasConsumption = (TextView) findViewById(R.id.gas_consumption);
         gasConsumption.setText("0 gallons saved");
 
-        final RelativeLayout infoContainer = (RelativeLayout) findViewById(R.id.info_container);
+        infoContainer = (RelativeLayout) findViewById(R.id.info_container);
 
         TextView destination = (TextView) findViewById(R.id.destination);
         destination.setText("Oracle Parkway");
@@ -42,19 +45,35 @@ public class RideActivity extends ActionBarActivity {
         TextView time = (TextView) findViewById(R.id.time);
         time.setText("30 minutes / 45 minutes without traffic");
 
-        final Button stateButton = (Button) findViewById(R.id.state_btn);
+        stateButton = (Button) findViewById(R.id.state_btn);
+
+        final Data data = new Data(RideActivity.this);
+        switch(data.getRideState()) {
+            case Data.RIDE_ACCEPTED:
+                invalidateOptionsMenu();
+                stateButton.setText("Begin Trip");
+                stateButton.setBackgroundColor(getResources().getColor(R.color.verde_blue));
+                break;
+            case Data.RIDE_ON:
+                invalidateOptionsMenu();
+                infoContainer.setVisibility(View.GONE);
+                stateButton.setVisibility(View.GONE);
+                gasConsumption.setVisibility(View.VISIBLE);
+                break;
+        }
+
         stateButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                switch(state) {
-                    case 0:
-                        state++;
+                switch(data.getRideState()) {
+                    case Data.RIDE_WAITING:
+                        data.setRideState(Data.RIDE_ACCEPTED);
                         invalidateOptionsMenu();
                         stateButton.setText("Begin Trip");
                         stateButton.setBackgroundColor(getResources().getColor(R.color.verde_blue));
                         break;
-                    case 1:
-                        state++;
+                    case Data.RIDE_ACCEPTED:
+                        data.setRideState(Data.RIDE_ON);
                         invalidateOptionsMenu();
                         infoContainer.setVisibility(View.GONE);
                         stateButton.setVisibility(View.GONE);
@@ -69,15 +88,17 @@ public class RideActivity extends ActionBarActivity {
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.menu_ride, menu);
 
-        switch(state) {
-            case 0:
+        Data data = new Data(RideActivity.this);
+
+        switch(data.getRideState()) {
+            case Data.RIDE_WAITING:
                 menu.findItem(R.id.action_finish).setVisible(false);
                 break;
-            case 1:
+            case Data.RIDE_ACCEPTED:
+                data.setAppState(Data.APP_SET);
                 menu.findItem(R.id.action_finish).setVisible(false);
-                menu.findItem(R.id.action_cancel).setVisible(false);
                 break;
-            case 2:
+            case Data.RIDE_ON:
                 menu.findItem(R.id.action_cancel).setVisible(false);
                 break;
         }
@@ -90,8 +111,21 @@ public class RideActivity extends ActionBarActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
 
+        Data data = new Data(this);
         if (id == R.id.action_cancel) {
+            data.setAppState(Data.APP_NONE);
+            data.setRideState(Data.RIDE_WAITING);
             finish();
+            return true;
+        }
+        else if(id == R.id.action_finish) {
+            data.setAppState(Data.APP_NONE);
+            data.setRideState(Data.RIDE_WAITING);
+
+            finish();
+            Intent intent = new Intent(RideActivity.this, MainActivity.class);
+            startActivity(intent);
+
             return true;
         }
 

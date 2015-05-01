@@ -20,6 +20,8 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.TimePicker;
 
+import com.oracle.com.oracle.data.Data;
+
 import java.text.NumberFormat;
 import java.util.Calendar;
 
@@ -102,6 +104,9 @@ public class SetupActivity extends ActionBarActivity {
         int id = item.getItemId();
 
         if (id == R.id.action_save) {
+            Data data = new Data(this);
+            data.setAppState(Data.APP_READY);
+
             Intent intent = new Intent(SetupActivity.this, RideActivity.class);
             startActivity(intent);
             return true;
