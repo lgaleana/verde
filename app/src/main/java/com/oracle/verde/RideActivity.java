@@ -11,8 +11,13 @@ import android.widget.Button;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.oracle.api.Results;
+import com.oracle.api.Ride;
 import com.oracle.data.Data;
 import com.oracle.web.JavascriptInterface;
+
+import java.sql.SQLException;
+import java.util.List;
 
 
 public class RideActivity extends ActionBarActivity {
@@ -25,69 +30,73 @@ public class RideActivity extends ActionBarActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_ride);
+        
+        try {
+            List<Ride> rides = Results.execute(0);
 
-        final WebView webView = (WebView) findViewById(R.id.webview_ride);
-        webView.getSettings().setJavaScriptEnabled(true);
-        webView.loadUrl("file:///android_asset/route.html");
+            final WebView webView = (WebView) findViewById(R.id.webview_ride);
+            webView.getSettings().setJavaScriptEnabled(true);
+            webView.loadUrl("file:///android_asset/route.html");
 
-        webView.addJavascriptInterface(new JavascriptInterface(this), "Android");
+            webView.addJavascriptInterface(new JavascriptInterface(this), "Android");
 
-        gasConsumption = (TextView) findViewById(R.id.gas_consumption);
-        gasConsumption.setText("0 gallons saved");
+            gasConsumption = (TextView) findViewById(R.id.gas_consumption);
+            gasConsumption.setText("0 gallons saved");
 
-        infoContainer = (RelativeLayout) findViewById(R.id.info_container);
+            infoContainer = (RelativeLayout) findViewById(R.id.info_container);
 
-        TextView destination = (TextView) findViewById(R.id.destination);
-        destination.setText("Oracle Parkway");
-        TextView distance = (TextView) findViewById(R.id.distance);
-        distance.setText("25 miles");
-        TextView totalGas = (TextView) findViewById(R.id.total_gas);
-        totalGas.setText("0.9 gallons");
-        TextView gasSaved = (TextView) findViewById(R.id.gas_saved);
-        gasSaved.setText("0.4 gallons saved");
-        TextView time = (TextView) findViewById(R.id.time);
-        time.setText("30 minutes / 45 minutes without traffic");
+            TextView destination = (TextView) findViewById(R.id.destination);
+            destination.setText("Oracle Parkway");
+            TextView distance = (TextView) findViewById(R.id.distance);
+            distance.setText("25 miles");
+            TextView totalGas = (TextView) findViewById(R.id.total_gas);
+            totalGas.setText("0.9 gallons");
+            TextView gasSaved = (TextView) findViewById(R.id.gas_saved);
+            gasSaved.setText("0.4 gallons saved");
+            TextView time = (TextView) findViewById(R.id.time);
+            time.setText("30 minutes / 45 minutes without traffic");
 
-        stateButton = (Button) findViewById(R.id.state_btn);
+            stateButton = (Button) findViewById(R.id.state_btn);
 
-        final Data data = new Data(RideActivity.this);
-        switch(data.getRideState()) {
-            case Data.RIDE_ACCEPTED:
-                invalidateOptionsMenu();
-                stateButton.setText("Begin Trip");
-                stateButton.setBackgroundColor(getResources().getColor(R.color.verde_blue));
-                break;
-            case Data.RIDE_ON:
-                invalidateOptionsMenu();
-                infoContainer.setVisibility(View.GONE);
-                stateButton.setVisibility(View.GONE);
-                gasConsumption.setVisibility(View.VISIBLE);
-                break;
-        }
-
-        stateButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                switch(data.getRideState()) {
-                    case Data.RIDE_WAITING:
-                        data.setRideState(Data.RIDE_ACCEPTED);
-                        invalidateOptionsMenu();
-                        stateButton.setText("Begin Trip");
-                        stateButton.setBackgroundColor(getResources().getColor(R.color.verde_blue));
-                        break;
-                    case Data.RIDE_ACCEPTED:
-                        data.setRideState(Data.RIDE_ON);
-                        invalidateOptionsMenu();
-                        infoContainer.setVisibility(View.GONE);
-                        stateButton.setVisibility(View.GONE);
-                        gasConsumption.setVisibility(View.VISIBLE);
-
-                        webView.loadUrl("javascript:animate()");
-
-                        break;
-                }
+            final Data data = new Data(RideActivity.this);
+            switch(data.getRideState()) {
+                case Data.RIDE_ACCEPTED:
+                    invalidateOptionsMenu();
+                    stateButton.setText("Begin Trip");
+                    stateButton.setBackgroundColor(getResources().getColor(R.color.verde_blue));
+                    break;
+                case Data.RIDE_ON:
+                    invalidateOptionsMenu();
+                    infoContainer.setVisibility(View.GONE);
+                    stateButton.setVisibility(View.GONE);
+                    gasConsumption.setVisibility(View.VISIBLE);
+                    break;
             }
-        });
+
+            stateButton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    switch(data.getRideState()) {
+                        case Data.RIDE_WAITING:
+                            data.setRideState(Data.RIDE_ACCEPTED);
+                            invalidateOptionsMenu();
+                            stateButton.setText("Begin Trip");
+                            stateButton.setBackgroundColor(getResources().getColor(R.color.verde_blue));
+                            break;
+                        case Data.RIDE_ACCEPTED:
+                            data.setRideState(Data.RIDE_ON);
+                            invalidateOptionsMenu();
+                            infoContainer.setVisibility(View.GONE);
+                            stateButton.setVisibility(View.GONE);
+                            gasConsumption.setVisibility(View.VISIBLE);
+
+                            webView.loadUrl("javascript:animate()");
+
+                            break;
+                    }
+                }
+            });
+        } catch (SQLException e) {}
     }
 
     @Override
