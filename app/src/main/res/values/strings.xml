@@ -9,4 +9,8 @@
     <string name="either_txt">Either</string>
     <string name="ride_txt">Ride</string>
     <string name="passengers_text">Number of passengers</string>
+    <string name="title_activity_login">LoginActivity</string>
+
+    <string name="hello_world">Hello world!</string>
+    <string name="action_settings">Settings</string>
 </resources>
