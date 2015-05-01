@@ -1,12 +1,22 @@
 package com.oracle.verde;
 
+import android.content.Context;
 import android.content.Intent;
+import android.net.Proxy;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
+import android.util.ArrayMap;
 import android.view.Menu;
 import android.view.View;
 import android.webkit.WebView;
 import android.widget.Button;
+
+import org.apache.http.HttpHost;
+import org.apache.http.conn.params.ConnRoutePNames;
+import org.apache.http.impl.client.DefaultHttpClient;
+
+import java.lang.reflect.Field;
+import java.lang.reflect.Method;
 
 public class MainActivity extends ActionBarActivity {
 

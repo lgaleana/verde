@@ -2,6 +2,11 @@
     <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
         <item name="colorPrimary">@color/verde_green</item>
         <item name="colorPrimaryDark">@color/verde_green_dark</item>
+        <item name="actionButtonStyle">@style/ActionButton</item>
+    </style>
+
+    <style name="ActionButton" parent="Widget.AppCompat.Light.ActionButton">
+        <item name="android:layout_marginRight">16dp</item>
     </style>
 
     <style name="Setup" parent="@style/AppTheme">

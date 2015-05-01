@@ -1,6 +1,12 @@
 <resources>
     <string name="app_name">Verde</string>
-
     <string name="title_activity_setup">Ride Setup</string>
+
+    <string name="action_save">Save</string>
+
     <string name="destination_hint">Destination</string>
+    <string name="drive_txt">Drive</string>
+    <string name="either_txt">Either</string>
+    <string name="ride_txt">Ride</string>
+    <string name="passengers_text">Number of passengers</string>
 </resources>
