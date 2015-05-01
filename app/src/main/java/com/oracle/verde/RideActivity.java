@@ -82,9 +82,8 @@ public class RideActivity extends ActionBarActivity {
                         stateButton.setVisibility(View.GONE);
                         gasConsumption.setVisibility(View.VISIBLE);
 
-                        webView.loadUrl("javascript:map.setCenter(origin)");
-                        webView.loadUrl("javascript:map.setZoom(15)");
-                        
+                        webView.loadUrl("javascript:animate()");
+
                         break;
                 }
             }

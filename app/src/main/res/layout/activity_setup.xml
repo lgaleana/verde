@@ -64,7 +64,7 @@
                 android:layout_width="40dp"
                 android:layout_height="30dp"
                 android:layout_marginEnd="@dimen/activity_horizontal_margin"
-                android:background="@drawable/ic_clock_right" />
+                android:background="@drawable/ic_clock_left" />
 
             <TextView
                 android:id="@+id/depart_date"

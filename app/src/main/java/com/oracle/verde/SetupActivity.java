@@ -35,7 +35,7 @@ public class SetupActivity extends ActionBarActivity {
     LinearLayout passengersContainer;
 
     static int ride = 0;
-    static boolean departure = true;
+    static boolean departure = false;
 
     static TextView date, time;
     static int year, month, day, weekDay, departHour, departMinute, arriveHour, arriveMinute;
@@ -66,7 +66,7 @@ public class SetupActivity extends ActionBarActivity {
         date = (TextView) findViewById(R.id.depart_date);
         date.setText(days[weekDay - 1] + ", " + months[month] + " " + day + ", " + year);
         time = (TextView) findViewById(R.id.depart_time);
-        time.setText(nf.format(departHour) + ":" + nf.format(departMinute) + " " + departStandard);
+        time.setText(nf.format(arriveHour) + ":" + nf.format(arriveMinute) + " " + arriveStandard);
 
         final Button clockButton = (Button) findViewById(R.id.clock_btn);
         clockButton.setOnClickListener(new View.OnClickListener() {
